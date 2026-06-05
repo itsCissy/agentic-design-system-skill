@@ -13,13 +13,13 @@ It includes:
 ## Install for Codex
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash
 ```
 
 Equivalent explicit target:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- codex
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- codex
 ```
 
 Installs to:
@@ -31,7 +31,7 @@ Installs to:
 ## Install for Claude / Claude Code
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- claude
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- claude
 ```
 
 Installs to:
@@ -45,7 +45,7 @@ Installs to:
 ## Install for Cursor
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- cursor
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- cursor
 ```
 
 Installs to:
@@ -61,7 +61,7 @@ Installs to:
 Install into `./skills` in the current directory:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- universal
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- universal
 ```
 
 Installs to:
@@ -73,14 +73,14 @@ Installs to:
 ## Custom install directory
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- custom /path/to/skills
+curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- custom /path/to/skills
 ```
 
 Or with an environment variable:
 
 ```bash
 AGENTIC_DESIGN_SKILLS_DIR=/path/to/skills \
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- custom
+  curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- custom
 ```
 
 ## Verify installation

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${AGENTIC_DESIGN_REPO:-itsCissy/agentic-design-system-skill}"
+REPO="${AGENTIC_DESIGN_REPO:-itsSIGI/agentic-design-system-skill}"
 BRANCH="${AGENTIC_DESIGN_BRANCH:-main}"
 TARGET="${1:-${AGENTIC_DESIGN_TARGET:-codex}}"
 CUSTOM_DIR="${2:-${AGENTIC_DESIGN_SKILLS_DIR:-}}"
@@ -29,16 +29,16 @@ Targets:
   custom      Install to custom_skills_dir or AGENTIC_DESIGN_SKILLS_DIR
 
 Environment overrides:
-  AGENTIC_DESIGN_REPO       Default: itsCissy/agentic-design-system-skill
+  AGENTIC_DESIGN_REPO       Default: itsSIGI/agentic-design-system-skill
   AGENTIC_DESIGN_BRANCH     Default: main
   AGENTIC_DESIGN_TARGET     Default: codex
   AGENTIC_DESIGN_SKILLS_DIR Used by custom target
 
 Examples:
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- claude
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- cursor
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- custom /path/to/skills
+  curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash
+  curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- claude
+  curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- cursor
+  curl -fsSL https://raw.githubusercontent.com/itsSIGI/agentic-design-system-skill/main/install.sh | bash -s -- custom /path/to/skills
 USAGE
 }
 
