@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     Agentic Genius v2 — UI Kit Gallery + Migration Guide
+     ----------------------------------------------------------------------------
+     本页用于视觉预览和 API 对照：左侧是最终效果，右侧是推荐 React UI Kit 写法。
+     .ag-demo-* 仅用于本页排版和代码展示，永远不要复制到业务代码。
+     真实项目优先使用 assets/react 组件模板或改造项目已有 components/ui。
+     ============================================================================ -->
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentic Genius v2 — UI Kit Gallery</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    .ag-demo-page { max-width: 1180px; margin: 0 auto; padding: var(--space-10) var(--space-6) var(--space-16); }
+    .ag-demo-hero { display: grid; gap: var(--space-4); padding-bottom: var(--space-8); border-bottom: var(--border-width-default) solid var(--color-border-subtle); }
+    .ag-demo-hero__title { margin: 0; }
+    .ag-demo-hero__desc { max-width: 780px; margin: 0; }
+    .ag-demo-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .ag-demo-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); margin-top: var(--space-8); }
+    .ag-demo-section { display: grid; gap: var(--space-4); }
+    .ag-demo-section__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+    .ag-demo-section__title { margin: 0; }
+    .ag-demo-section__note { margin: 0; }
+    .ag-demo-pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr); gap: var(--space-4); align-items: stretch; }
+    .ag-demo-panel { background: var(--color-surface-elevated); border: var(--border-width-default) solid var(--color-border-subtle); border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--shadow-whisper); }
+    .ag-demo-preview { display: grid; gap: var(--space-4); align-content: start; }
+    .ag-demo-code { margin: 0; white-space: pre-wrap; }
+    .ag-demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); }
+    .ag-demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+    .ag-demo-row--between { justify-content: space-between; }
+    .ag-demo-stack { display: grid; gap: var(--space-3); }
+    .ag-demo-field { display: grid; gap: var(--space-1); }
+    .ag-demo-shell { display: grid; grid-template-columns: var(--size-sidebar-w) minmax(0, 1fr); min-height: 360px; overflow: hidden; padding: 0; }
+    .ag-demo-main { display: grid; gap: var(--space-4); padding: var(--space-5); background: var(--color-surface); }
+    .ag-demo-topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+    .ag-demo-stat { display: grid; gap: var(--space-2); }
+    .ag-demo-icon { inline-size: var(--size-icon-md); block-size: var(--size-icon-md); display: inline-block; color: currentColor; }
+    .ag-demo-icon::before { content: ""; display: block; inline-size: 100%; block-size: 100%; border: var(--border-width-strong) solid currentColor; border-radius: var(--radius-full); box-sizing: border-box; }
+    .ag-demo-icon--search::before { box-shadow: var(--ring-width-focus) var(--ring-width-focus) 0 calc(-1 * var(--border-width-default)) currentColor; }
+    .ag-demo-icon--x::before { border: 0; border-radius: 0; background: linear-gradient(45deg, transparent calc(50% - var(--border-width-default)), currentColor calc(50% - var(--border-width-default)), currentColor calc(50% + var(--border-width-default)), transparent calc(50% + var(--border-width-default))), linear-gradient(-45deg, transparent calc(50% - var(--border-width-default)), currentColor calc(50% - var(--border-width-default)), currentColor calc(50% + var(--border-width-default)), transparent calc(50% + var(--border-width-default))); }
+    .ag-demo-icon--info::before { border-radius: var(--radius-sm); }
+    .ag-demo-progress-62 { width: 62%; }
+    .ag-demo-progress-40 { width: 40%; }
+    .ag-demo-slider-thumb-62 { left: 62%; }
+    .ag-demo-avatar { inline-size: var(--size-control-lg); block-size: var(--size-control-lg); display: inline-flex; align-items: center; justify-content: center; background: var(--color-primary-bg); color: var(--color-primary-text); font-size: var(--font-size-small); font-weight: var(--weight-bold); }
+    .ag-demo-tooltip-static { position: relative; top: auto; left: auto; }
+    .ag-demo-skeleton-short { width: 80%; }
+    .ag-demo-empty-icon { inline-size: var(--space-12); block-size: var(--space-12); border: var(--border-width-default) solid var(--color-border-strong); border-radius: var(--radius-lg); }
+    .ag-demo-modal-preview { position: relative; min-height: 300px; overflow: hidden; background: var(--color-surface); border-radius: var(--radius-lg); }
+    .ag-demo-modal-preview .ag-overlay { position: absolute; }
+    .ag-demo-danger { border-color: var(--color-danger-bg); background: var(--r100); }
+    .ag-demo-dont { color: var(--color-danger-bg); font-weight: var(--weight-bold); }
+    .ag-demo-do { color: var(--color-agent-running); font-weight: var(--weight-bold); }
+    @media (max-width: 900px) {
+      .ag-demo-pair { grid-template-columns: 1fr; }
+      .ag-demo-shell { grid-template-columns: 1fr; }
+      .ag-demo-shell .ag-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+<main class="ag-demo-page">
+  <header class="ag-demo-hero">
+    <p class="ag-micro">Agentic Genius Design System v2</p>
+    <h1 class="ag-display ag-demo-hero__title">Portable UI Kit Gallery</h1>
+    <p class="ag-body-lg ag-demo-hero__desc">v2 的重点不是把 <code class="ag-code-inline">.ag-*</code> class 到处贴，而是先建立 UI 基础层。大项目默认 Adapter 模式；新项目可复制 <code class="ag-code-inline">assets/react</code> 作为轻量 UI kit。</p>
+    <p class="ag-tag ag-tag--success">UPDATED · FULL COMPONENT COVERAGE ADDED</p>
+    <div class="ag-demo-toolbar">
+      <a class="ag-link--standalone" href="#adapter">Adapter 模式</a>
+      <a class="ag-link--standalone" href="#components">组件 API</a>
+      <a class="ag-link--standalone" href="#full-coverage">完整组件覆盖</a>
+      <a class="ag-link--standalone" href="#dont">错误模式</a>
+      <button class="ag-btn ag-btn--primary">Primary Action</button>
+      <button class="ag-btn ag-btn--secondary">Secondary</button>
+    </div>
+  </header>
+
+  <div class="ag-demo-layout">
+    <section class="ag-demo-section" id="adapter">
+      <div class="ag-demo-section__head">
+        <h2 class="ag-heading ag-demo-section__title">接入模式</h2>
+        <p class="ag-caption ag-demo-section__note">大项目优先 Adapter，不直接改业务页</p>
+      </div>
+      <div class="ag-demo-grid">
+        <div class="ag-card ag-card--contained">
+          <span class="ag-tag ag-tag--success">RECOMMENDED</span>
+          <h3 class="ag-card__title">Adapter Mode</h3>
+          <p class="ag-card__desc">已有 <code class="ag-code-inline">components/ui</code>、shadcn 或 Tailwind 组件层时，只改 token bridge 和基础组件。</p>
+        </div>
+        <div class="ag-card ag-card--contained">
+          <span class="ag-tag ag-tag--info">NEW PROJECT</span>
+          <h3 class="ag-card__title">Bootstrap Mode</h3>
+          <p class="ag-card__desc">没有 UI 层时，复制 <code class="ag-code-inline">tokens.css</code>、<code class="ag-code-inline">components.css</code>、<code class="ag-code-inline">assets/react</code>。</p>
+        </div>
+        <div class="ag-card ag-card--contained">
+          <span class="ag-tag ag-tag--warning">PROTOTYPE</span>
+          <h3 class="ag-card__title">CSS-only Mode</h3>
+          <p class="ag-card__desc">仅适合静态原型。生产项目不要把复杂结构类当工具类散贴。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ag-demo-section" id="components">
+      <div class="ag-demo-section__head">
+        <h2 class="ag-heading ag-demo-section__title">Core Components</h2>
+        <p class="ag-caption ag-demo-section__note">左侧视觉，右侧推荐 React API</p>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Button / Input / Search</h3>
+          <div class="ag-demo-row">
+            <button class="ag-btn ag-btn--primary">New Dashboard</button>
+            <button class="ag-btn ag-btn--secondary">Customize</button>
+            <button class="ag-btn ag-btn--ghost ag-icon-btn" aria-label="Help"><span class="ag-demo-icon ag-demo-icon--info" aria-hidden="true"></span></button>
+            <button class="ag-btn ag-btn--danger">Delete</button>
+          </div>
+          <div class="ag-demo-field">
+            <label class="ag-field-label" for="gallery-email">Email</label>
+            <input id="gallery-email" class="ag-input" placeholder="you@example.com">
+          </div>
+          <div class="ag-search">
+            <span class="ag-search__leading" aria-hidden="true"><span class="ag-demo-icon ag-demo-icon--search"></span></span>
+            <input class="ag-search__input" type="search" placeholder="Search workflows, tasks, agents...">
+            <button class="ag-search__trailing" aria-label="Clear"><span class="ag-demo-icon ag-demo-icon--x" aria-hidden="true"></span></button>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Button variant="primary"&gt;New Dashboard&lt;/Button&gt;
+&lt;Button variant="secondary"&gt;Customize&lt;/Button&gt;
+&lt;IconButton label="Help" icon={&lt;InfoIcon /&gt;} /&gt;
+&lt;Button variant="danger"&gt;Delete&lt;/Button&gt;
+
+&lt;Field label="Email"&gt;
+  &lt;Input placeholder="you@example.com" /&gt;
+&lt;/Field&gt;
+
+&lt;SearchInput placeholder="Search workflows..." /&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Badge / Status / Progress</h3>
+          <div class="ag-demo-row">
+            <span class="ag-tag ag-tag--success">ACTIVE</span>
+            <span class="ag-tag ag-tag--warning">PENDING</span>
+            <span class="ag-tag ag-tag--error">FAILED</span>
+            <span class="ag-tag ag-tag--purple">NEEDS INTERVENTION</span>
+          </div>
+          <div class="ag-demo-stack">
+            <span class="ag-status"><span class="ag-status__dot ag-status__dot--running"></span>Running</span>
+            <span class="ag-status"><span class="ag-status__dot ag-status__dot--idle"></span>Idle</span>
+            <span class="ag-status"><span class="ag-status__dot ag-status__dot--error"></span>Error</span>
+          </div>
+          <div class="ag-demo-stack">
+            <div class="ag-demo-row ag-demo-row--between"><span class="ag-small">Synthesis Progress</span><span class="ag-small">62%</span></div>
+            <div class="ag-progress" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="ag-progress__fill ag-demo-progress-62"></div></div>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Badge variant="success"&gt;ACTIVE&lt;/Badge&gt;
+&lt;Badge variant="warning"&gt;PENDING&lt;/Badge&gt;
+&lt;Badge variant="error"&gt;FAILED&lt;/Badge&gt;
+&lt;Badge variant="purple"&gt;Needs Intervention&lt;/Badge&gt;
+
+&lt;StatusBadge status="running" label="Running" /&gt;
+&lt;StatusBadge status="idle" label="Idle" /&gt;
+&lt;StatusBadge status="error" label="Error" /&gt;
+
+&lt;Progress value={62} label="Synthesis Progress" /&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Card / Section Header</h3>
+          <div class="ag-card ag-card--contained">
+            <div class="ag-card__header">
+              <div class="ag-card__title-row">
+                <span class="ag-status__dot ag-status__dot--running"></span>
+                <h3 class="ag-card__title">Blocked Issues</h3>
+              </div>
+              <span class="ag-tag ag-tag--warning">3</span>
+            </div>
+            <p class="ag-card__desc">Raw material CAS-7789-38-0 insufficient stock.</p>
+            <div class="ag-card__footer"><span>Affecting 25 reactions</span><span>Blocked 11 iterations</span></div>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Card variant="contained"&gt;
+  &lt;CardHeader
+    title="Blocked Issues"
+    icon={&lt;StatusDot status="running" /&gt;}
+    action={&lt;Badge variant="warning"&gt;3&lt;/Badge&gt;}
+  /&gt;
+  &lt;CardDescription&gt;
+    Raw material CAS-7789-38-0 insufficient stock.
+  &lt;/CardDescription&gt;
+  &lt;CardFooter&gt;...&lt;/CardFooter&gt;
+&lt;/Card&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Select / Dropdown / Tabs</h3>
+          <div class="ag-select">
+            <button class="ag-select__trigger is-open" aria-haspopup="listbox" aria-expanded="true">
+              <span>Team Overview</span>
+              <span class="ag-select__chev" aria-hidden="true">⌄</span>
+            </button>
+            <ul class="ag-select__menu" role="listbox">
+              <li class="ag-select__item" role="option" aria-selected="true">Team Overview <span class="ag-select__check">✓</span></li>
+              <li class="ag-select__item" role="option">Personal</li>
+            </ul>
+          </div>
+          <div class="ag-tabs">
+            <div class="ag-tabs__list" role="tablist">
+              <button class="ag-tab is-active" role="tab" aria-selected="true">Overview</button>
+              <button class="ag-tab" role="tab" aria-selected="false">Tasks</button>
+              <button class="ag-tab" role="tab" aria-selected="false">Agents</button>
+            </div>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Select
+  value={scope}
+  onChange={setScope}
+  options={[{ value: "team", label: "Team Overview" }]}
+/&gt;
+
+&lt;DropdownMenu
+  label="Actions"
+  items={[{ key: "edit", label: "Edit" }]}
+/&gt;
+
+&lt;Tabs
+  value={tab}
+  onChange={setTab}
+  items={[{ key: "overview", label: "Overview" }]}
+/&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="ag-demo-section">
+      <div class="ag-demo-section__head">
+        <h2 class="ag-heading ag-demo-section__title">Application Shell</h2>
+        <p class="ag-caption ag-demo-section__note">Sidebar/Header/Search 应作为基础层组件</p>
+      </div>
+      <div class="ag-card ag-card--contained ag-demo-shell">
+        <aside class="ag-sidebar">
+          <div class="ag-sidebar__brand">Agentic Curve</div>
+          <nav class="ag-sidebar__nav" aria-label="Primary">
+            <a class="ag-sidebar__item is-active" href="#">Projects</a>
+            <a class="ag-sidebar__item" href="#">Workflows</a>
+            <a class="ag-sidebar__item" href="#">Teams</a>
+            <a class="ag-sidebar__item" href="#">Agents</a>
+          </nav>
+        </aside>
+        <div class="ag-demo-main">
+          <div class="ag-demo-topbar">
+            <div class="ag-search">
+              <span class="ag-search__leading" aria-hidden="true"><span class="ag-demo-icon ag-demo-icon--search"></span></span>
+              <input class="ag-search__input" type="search" placeholder="Search workflows, tasks, agents...">
+            </div>
+            <button class="ag-btn ag-btn--primary">New Dashboard</button>
+          </div>
+          <div class="ag-demo-grid">
+            <div class="ag-card ag-card--contained ag-demo-stat"><span class="ag-caption">Total Tasks</span><span class="ag-page-title">6</span><span class="ag-status"><span class="ag-status__dot ag-status__dot--running"></span>1 Running</span></div>
+            <div class="ag-card ag-card--contained ag-demo-stat"><span class="ag-caption">Success Rate</span><span class="ag-page-title">87.5%</span><span class="ag-tag ag-tag--success">+3.2%</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="ag-demo-section" id="full-coverage">
+      <div class="ag-demo-section__head">
+        <h2 class="ag-heading ag-demo-section__title">Full Component Coverage</h2>
+        <p class="ag-caption ag-demo-section__note">完整视觉覆盖；生产代码仍优先用 React UI Kit / Adapter</p>
+      </div>
+
+      <div class="ag-demo-grid">
+        <div class="ag-card ag-card--contained ag-demo-preview">
+          <h3 class="ag-subheading">Form Controls</h3>
+          <label class="ag-demo-row">
+            <span class="ag-checkbox is-checked" role="checkbox" aria-checked="true" tabindex="0"></span>
+            <span class="ag-body">Checked</span>
+          </label>
+          <label class="ag-demo-row">
+            <span class="ag-checkbox is-indeterminate" role="checkbox" aria-checked="mixed" tabindex="0"></span>
+            <span class="ag-body">Indeterminate</span>
+          </label>
+          <label class="ag-demo-row">
+            <span class="ag-radio is-checked" role="radio" aria-checked="true" tabindex="0"></span>
+            <span class="ag-body">Radio option</span>
+          </label>
+          <div class="ag-demo-row ag-demo-row--between">
+            <span class="ag-body">Immediate switch</span>
+            <button class="ag-switch is-on" role="switch" aria-checked="true" aria-label="Immediate switch"><span class="ag-switch__thumb"></span></button>
+          </div>
+          <div class="ag-slider" role="slider" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+            <div class="ag-slider__fill ag-demo-progress-62"></div>
+            <div class="ag-slider__thumb ag-demo-slider-thumb-62"></div>
+          </div>
+        </div>
+
+        <div class="ag-card ag-card--contained ag-demo-preview">
+          <h3 class="ag-subheading">Card Elevation</h3>
+          <div class="ag-card ag-card--contained"><h4 class="ag-card__title">Contained</h4><p class="ag-card__desc">Default card with border.</p></div>
+          <div class="ag-card ag-card--whisper"><h4 class="ag-card__title">Whisper</h4><p class="ag-card__desc">Soft elevated surface.</p></div>
+          <div class="ag-card ag-card--ring is-selected"><h4 class="ag-card__title">Selected</h4><p class="ag-card__desc">Neutral selected ring.</p></div>
+        </div>
+
+        <div class="ag-card ag-card--contained ag-demo-preview">
+          <h3 class="ag-subheading">Links / Pills / Avatars</h3>
+          <p class="ag-body">Inline text with <a class="ag-link" href="#">hover link</a>.</p>
+          <a class="ag-link--standalone" href="#">Standalone link <span class="ag-link__arrow" aria-hidden="true">›</span></a>
+          <span class="ag-pill"><span class="ag-status__dot ag-status__dot--completed"></span>Active · v2.0</span>
+          <div class="ag-demo-row">
+            <span class="ag-avatar ag-demo-avatar">SC</span>
+            <span class="ag-avatar ag-demo-avatar">AG</span>
+          </div>
+        </div>
+
+        <div class="ag-card ag-card--contained ag-demo-preview">
+          <h3 class="ag-subheading">Agent Status</h3>
+          <span class="ag-status"><span class="ag-status__dot ag-status__dot--running"></span>Running</span>
+          <span class="ag-status"><span class="ag-status__dot ag-status__dot--idle"></span>Idle</span>
+          <span class="ag-status"><span class="ag-status__dot ag-status__dot--completed"></span>Completed</span>
+          <span class="ag-status"><span class="ag-status__dot ag-status__dot--error"></span>Error</span>
+          <span class="ag-status"><span class="ag-status__dot ag-status__dot--paused"></span>Paused</span>
+        </div>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Table / Pagination / Breadcrumb</h3>
+          <nav class="ag-breadcrumb" aria-label="Breadcrumb">
+            <a class="ag-breadcrumb__item" href="#">Home</a>
+            <span class="ag-breadcrumb__sep" aria-hidden="true">/</span>
+            <a class="ag-breadcrumb__item" href="#">Agents</a>
+            <span class="ag-breadcrumb__sep" aria-hidden="true">/</span>
+            <span class="ag-breadcrumb__item is-current" aria-current="page">Synthesis</span>
+          </nav>
+          <table class="ag-table">
+            <thead><tr><th>Batch</th><th>Status</th><th>Updated</th></tr></thead>
+            <tbody>
+              <tr><td>B2026-031</td><td><span class="ag-tag ag-tag--success">RUNNING</span></td><td>Now</td></tr>
+              <tr><td>B2026-028</td><td><span class="ag-tag ag-tag--warning">PENDING</span></td><td>1h ago</td></tr>
+              <tr><td>B2026-019</td><td><span class="ag-tag ag-tag--error">FAILED</span></td><td>Yesterday</td></tr>
+            </tbody>
+          </table>
+          <nav class="ag-pagination" aria-label="Pagination">
+            <button class="ag-page-btn is-disabled" aria-label="Previous">‹</button>
+            <button class="ag-page-btn is-active" aria-current="page">1</button>
+            <button class="ag-page-btn">2</button>
+            <button class="ag-page-btn">3</button>
+            <button class="ag-page-btn" aria-label="Next">›</button>
+          </nav>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Table&gt;...&lt;/Table&gt;
+&lt;Pagination page={1} total={3} /&gt;
+&lt;Breadcrumb items={items} /&gt;
+
+// If project has no wrappers yet,
+// use the .ag-table / .ag-pagination
+// structure as the implementation base.</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Dropdown / Tooltip / Toast</h3>
+          <div class="ag-demo-row">
+            <div class="ag-menu" role="menu">
+              <div class="ag-menu__label">Actions</div>
+              <button class="ag-menu__item" role="menuitem">Edit</button>
+              <button class="ag-menu__item" role="menuitem">Duplicate</button>
+              <div class="ag-menu__divider"></div>
+              <button class="ag-menu__item ag-menu__item--danger" role="menuitem">Delete</button>
+            </div>
+            <span class="ag-tooltip-wrap">
+              <button class="ag-btn ag-btn--ghost ag-icon-btn" aria-label="Info" aria-describedby="gallery-tip"><span class="ag-demo-icon ag-demo-icon--info" aria-hidden="true"></span></button>
+              <span class="ag-tooltip ag-demo-tooltip-static" id="gallery-tip" role="tooltip">Token driven tooltip</span>
+            </span>
+          </div>
+          <div class="ag-toast ag-toast--success" role="status"><span class="ag-toast__icon" aria-hidden="true"><span class="ag-status__dot ag-status__dot--running"></span></span><div>Agent created successfully</div></div>
+          <div class="ag-toast ag-toast--warning" role="status"><span class="ag-toast__icon" aria-hidden="true"><span class="ag-status__dot ag-status__dot--paused"></span></span><div>Manual review required</div></div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;DropdownMenu items={items} /&gt;
+&lt;Tooltip content="Token driven tooltip"&gt;
+  &lt;IconButton label="Info" icon={...} /&gt;
+&lt;/Tooltip&gt;
+&lt;Toast variant="success"&gt;Agent created&lt;/Toast&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Accordion / Skeleton / Empty</h3>
+          <div class="ag-accordion">
+            <div class="ag-accordion__item is-open">
+              <button class="ag-accordion__trigger" aria-expanded="true">What is an Agent?<span class="ag-accordion__icon" aria-hidden="true">⌄</span></button>
+              <div class="ag-accordion__panel">An agent is a long-running autonomous workflow participant.</div>
+            </div>
+            <div class="ag-accordion__item">
+              <button class="ag-accordion__trigger" aria-expanded="false">How to monitor?<span class="ag-accordion__icon" aria-hidden="true">⌄</span></button>
+            </div>
+          </div>
+          <div>
+            <div class="ag-skeleton ag-skeleton--title"></div>
+            <div class="ag-skeleton ag-skeleton--text"></div>
+            <div class="ag-skeleton ag-skeleton--text ag-demo-skeleton-short"></div>
+          </div>
+          <div class="ag-empty">
+            <div class="ag-empty__icon ag-demo-empty-icon" aria-hidden="true"></div>
+            <h3 class="ag-empty__title">No agents yet</h3>
+            <p class="ag-empty__desc">Create your first autonomous workflow participant.</p>
+            <button class="ag-btn ag-btn--primary">Create Agent</button>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Accordion items={items} /&gt;
+&lt;Skeleton variant="title" /&gt;
+&lt;EmptyState
+  title="No agents yet"
+  action={&lt;Button&gt;Create Agent&lt;/Button&gt;}
+/&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Code / Chat / Token Stream</h3>
+          <pre class="ag-code"><code><span class="ag-code__keyword">const</span> agent = <span class="ag-code__fn">createAgent</span>({
+  status: <span class="ag-code__string">"running"</span>,
+  retries: <span class="ag-code__number">3</span>
+});</code></pre>
+          <div class="ag-chat ag-chat--agent">I’ll inspect the workflow graph and report blockers.</div>
+          <div class="ag-chat ag-chat--user">Keep brand colors constrained.</div>
+          <p class="ag-body">Streaming token <span class="ag-token-new">highlight</span> fades with token variables.</p>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;CodeBlock language="ts" code={code} /&gt;
+&lt;ChatBubble role="agent"&gt;...&lt;/ChatBubble&gt;
+&lt;ChatBubble role="user"&gt;...&lt;/ChatBubble&gt;
+&lt;TokenNew&gt;highlight&lt;/TokenNew&gt;</code></pre>
+      </div>
+
+      <div class="ag-demo-pair">
+        <div class="ag-demo-panel ag-demo-preview">
+          <h3 class="ag-subheading">Modal / Drawer Preview</h3>
+          <div class="ag-demo-modal-preview">
+            <div class="ag-overlay">
+              <div class="ag-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-modal-title">
+                <div class="ag-modal__header">
+                  <h2 class="ag-modal__title" id="gallery-modal-title">Delete Agent?</h2>
+                  <button class="ag-btn ag-btn--ghost ag-icon-btn" aria-label="Close"><span class="ag-demo-icon ag-demo-icon--x" aria-hidden="true"></span></button>
+                </div>
+                <div class="ag-modal__body">This action cannot be undone. The workflow history will be archived.</div>
+                <div class="ag-modal__footer">
+                  <button class="ag-btn ag-btn--secondary">Cancel</button>
+                  <button class="ag-btn ag-btn--danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="ag-code ag-demo-code"><code>&lt;Modal
+  open={open}
+  title="Delete Agent?"
+  onClose={close}
+  footer={
+    &lt;&gt;
+      &lt;Button variant="secondary"&gt;Cancel&lt;/Button&gt;
+      &lt;Button variant="danger"&gt;Delete&lt;/Button&gt;
+    &lt;/&gt;
+  }
+/&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="ag-demo-section" id="dont">
+      <div class="ag-demo-section__head">
+        <h2 class="ag-heading ag-demo-section__title">Do / Don’t</h2>
+        <p class="ag-caption ag-demo-section__note">这些错误是 v2 专门防止的</p>
+      </div>
+      <div class="ag-demo-pair">
+        <div class="ag-card ag-card--contained ag-demo-danger">
+          <p class="ag-demo-dont">DON’T</p>
+          <pre class="ag-code ag-demo-code"><code>&lt;StatusBadge color="var(--o500)" label="NEEDS" /&gt;
+
+&lt;button className="ag-select"&gt;Team&lt;/button&gt;
+
+&lt;div className="border-orange/20 bg-orange-50" /&gt;
+
+&lt;div className="ag-demo-row" /&gt;</code></pre>
+        </div>
+        <div class="ag-card ag-card--contained">
+          <p class="ag-demo-do">DO</p>
+          <pre class="ag-code ag-demo-code"><code>&lt;Badge variant="warning"&gt;Needs Intervention&lt;/Badge&gt;
+
+&lt;Select value={team} onChange={setTeam} options={teams} /&gt;
+
+&lt;Card variant="contained" selected /&gt;
+
+// .ag-demo-* stays in this gallery only</code></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>
