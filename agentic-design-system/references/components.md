@@ -141,4 +141,4 @@ class：`.ag-empty` > `.ag-empty__icon`/`__title`/`__desc` + CTA 按钮。
 - 匹配字符用 `.ag-combobox__match` 加粗高亮；空结果用 `.ag-combobox__empty` "No matches"。
 
 ## Token Stream
-class：`.ag-token-new`——agent 流式输出时给最新一段 token 包裹，品牌蓝微高亮 200ms 后自动淡出，让用户看到"光标位置"。Agentic Genius 特色微交互。
+class：`.ag-token-new`——agent 流式输出时给最新一段 token 包裹，品牌蓝微高亮 200ms 后自动淡出，让用户看到"光标位置"。Agentic Design System 特色微交互。

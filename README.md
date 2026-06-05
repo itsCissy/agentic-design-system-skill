@@ -1,43 +1,43 @@
-# Agentic Genius Design Skill
+# Agentic Design System Skill
 
-Portable UI kit + migration skill for applying the Agentic Genius design system in AI coding tools.
+A portable design system skill for applying a consistent, token-driven UI language across products.
 
 It includes:
 
-- Agentic Genius design tokens
+- Design tokens
 - CSS component primitives
 - React UI Kit templates
-- Adapter-mode migration rules for large projects
+- Adapter-mode migration guidance
 - Component gallery and validation checklist
 
 ## Install for Codex
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash
 ```
 
 Equivalent explicit target:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- codex
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- codex
 ```
 
 Installs to:
 
 ```bash
-~/.codex/skills/agentic-genius-design
+~/.codex/skills/agentic-design-system
 ```
 
 ## Install for Claude / Claude Code
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- claude
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- claude
 ```
 
 Installs to:
 
 ```bash
-~/.claude/skills/agentic-genius-design
+~/.claude/skills/agentic-design-system
 ```
 
 > Note: Claude clients may differ in how they discover local skills. If your Claude setup uses a different skills directory, use the custom install option below.
@@ -45,13 +45,13 @@ Installs to:
 ## Install for Cursor
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- cursor
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- cursor
 ```
 
 Installs to:
 
 ```bash
-~/.cursor/skills/agentic-genius-design
+~/.cursor/skills/agentic-design-system
 ```
 
 > Note: Cursor skill/plugin discovery can vary by setup. If your Cursor setup expects another directory, use the custom install option below.
@@ -61,26 +61,26 @@ Installs to:
 Install into `./skills` in the current directory:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- universal
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- universal
 ```
 
 Installs to:
 
 ```bash
-./skills/agentic-genius-design
+./skills/agentic-design-system
 ```
 
 ## Custom install directory
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- custom /path/to/skills
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- custom /path/to/skills
 ```
 
 Or with an environment variable:
 
 ```bash
-AGENTIC_GENIUS_SKILLS_DIR=/path/to/skills \
-  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash -s -- custom
+AGENTIC_DESIGN_SKILLS_DIR=/path/to/skills \
+  curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-design-system-skill/main/install.sh | bash -s -- custom
 ```
 
 ## Verify installation
@@ -88,28 +88,28 @@ AGENTIC_GENIUS_SKILLS_DIR=/path/to/skills \
 Codex example:
 
 ```bash
-ls ~/.codex/skills/agentic-genius-design
-open ~/.codex/skills/agentic-genius-design/assets/component-examples.html
+ls ~/.codex/skills/agentic-design-system
+open ~/.codex/skills/agentic-design-system/assets/component-examples.html
 ```
 
 Claude example:
 
 ```bash
-ls ~/.claude/skills/agentic-genius-design
-open ~/.claude/skills/agentic-genius-design/assets/component-examples.html
+ls ~/.claude/skills/agentic-design-system
+open ~/.claude/skills/agentic-design-system/assets/component-examples.html
 ```
 
 Cursor example:
 
 ```bash
-ls ~/.cursor/skills/agentic-genius-design
-open ~/.cursor/skills/agentic-genius-design/assets/component-examples.html
+ls ~/.cursor/skills/agentic-design-system
+open ~/.cursor/skills/agentic-design-system/assets/component-examples.html
 ```
 
 ## Use
 
 ```text
-使用 agentic-genius-design 帮我把这个 React/Next 项目接入 Agentic Genius 设计系统。
+使用 agentic-design-system 帮我为这个项目建立统一的设计系统和 UI 基础组件。
 ```
 
 For large existing projects, the skill defaults to Adapter mode: first update tokens and base UI components, not business pages.
@@ -118,7 +118,7 @@ For large existing projects, the skill defaults to Adapter mode: first update to
 
 ```bash
 mkdir -p ~/.codex/skills
-unzip -o agentic-genius-design.skill -d ~/.codex/skills
+unzip -o agentic-design-system.skill -d ~/.codex/skills
 ```
 
 ## Installer options

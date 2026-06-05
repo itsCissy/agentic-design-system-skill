@@ -4,7 +4,7 @@
 
 ## 适配步骤
 
-1. 在全局 CSS 建 token bridge：把 `--background`、`--foreground`、`--card`、`--border`、`--ring` 等映射到 Agentic Genius token。
+1. 在全局 CSS 建 token bridge：把 `--background`、`--foreground`、`--card`、`--border`、`--ring` 等映射到 Agentic Design System token。
 2. 改造 `components/ui/button.tsx`、`input.tsx`、`badge.tsx`、`card.tsx`、`select.tsx` 等基础组件 variant。
 3. 保持原项目 import 路径不变，业务页面无需大改。
 4. 只有项目缺少某个基础组件时，才从 `assets/react/components` 复制对应模板。

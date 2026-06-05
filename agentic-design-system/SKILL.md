@@ -1,9 +1,9 @@
 ---
-name: agentic-genius-design
-description: Agentic Genius 便携式 UI kit + 大项目迁移 skill。当用户要把 Agentic Genius 设计系统接入 React/Vue/Next/Tailwind/shadcn 项目、升级页面视觉、修正组件状态色/按钮/输入框/卡片/导航/Badge/Modal/Select/Sidebar 等 UI 规范、或需要“像成熟 UI kit 一样”稳定复用设计系统时使用。优先建立 token + 基础 UI 组件层，禁止在业务页面散写颜色和 .ag-* 结构类；包含 React 组件模板、CSS tokens、组件样式、迁移策略、shadcn adapter、React/Vue 用法和达标自检清单。
+name: agentic-design-system
+description: A portable design system skill for applying a consistent, token-driven UI language across products. Includes design tokens, component primitives, React UI Kit templates, adapter-mode migration guidance, and validation checklists. Use it to establish a reusable UI foundation before changing product screens; avoid scattered visual values, ad-hoc status colors, and one-off component structures.
 ---
 
-# Agentic Genius Design System v2
+# Agentic Design System v2
 
 这是一个**便携式 UI kit skill**，不是只给 AI 看的 CSS 规范。目标是让项目先拥有稳定 UI 基础层，再由业务页面调用组件 API。
 

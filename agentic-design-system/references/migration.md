@@ -1,6 +1,6 @@
 # 大项目迁移策略（v2）
 
-目标：把 Agentic Genius 作为**项目 UI 基础层**接入，而不是在业务页面散落 `.ag-*` class。
+目标：把 Agentic Design System 作为**项目 UI 基础层**接入，而不是在业务页面散落 `.ag-*` class。
 
 ## 0. 先判断项目类型
 
