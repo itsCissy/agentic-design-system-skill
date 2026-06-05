@@ -5,7 +5,7 @@ Portable UI kit + migration skill for applying the Agentic Genius design system 
 ## Install for Codex
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_GITHUB_USER/agentic-genius-design-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/itsCissy/agentic-genius-design-skill/main/install.sh | bash
 ```
 
 After installation, restart Codex or open a new session.

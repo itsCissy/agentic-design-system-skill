@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${AGENTIC_GENIUS_REPO:-YOUR_GITHUB_USER/agentic-genius-design-skill}"
+REPO="${AGENTIC_GENIUS_REPO:-itsCissy/agentic-genius-design-skill}"
 BRANCH="${AGENTIC_GENIUS_BRANCH:-main}"
 CODEX_SKILLS_DIR="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/agentic-genius-design.XXXXXX")"
