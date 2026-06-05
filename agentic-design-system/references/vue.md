@@ -1,140 +1,58 @@
-# Vue 用法示例
+# Vue UI Kit 模板（v2）
 
-> **形式：class 型**（与 React 示例同一思路，共用同一份 `assets/components.css`）。
-> Vue 只负责状态与 `:class` 的 `.is-*` 切换，**不重写样式**。示例用 Vue 3 `<script setup>`。
+Vue/Nuxt 项目优先使用 `assets/vue` 的 UI Kit 模板，不建议业务页面直接拼 `.ag-*` class。
 
-## 接入（一次）
+## Bootstrap 模式
 
+1. 复制样式：
 ```ts
-// main.ts
-import "./styles/tokens.css";      // 复制自 assets/tokens.css
-import "./styles/components.css";  // 复制自 assets/components.css
+import "./styles/agentic-tokens.css";
+import "./styles/agentic-components.css";
 ```
 
-切换主题：
-```ts
-document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-// 不设则跟随系统 prefers-color-scheme
-```
+2. 复制 `assets/vue` 到 `src/components/agentic-ui`。
 
-## 静态组件：直接写 class
-
-```vue
-<template>
-  <button class="ag-btn ag-btn--primary">开始对话</button>
-  <button class="ag-btn ag-btn--secondary ag-btn--compact">取消</button>
-  <input class="ag-input" placeholder="you@example.com" />
-
-  <div class="ag-card ag-card--contained is-clickable">
-    <h3 class="ag-card__title">项目卡</h3>
-    <p class="ag-card__desc">默认 Contained 变体。</p>
-  </div>
-
-  <span class="ag-tag ag-tag--success">ACTIVE</span>
-</template>
-```
-
-## 带 variant 的薄封装（可选）
-
-```vue
-<!-- AgButton.vue -->
-<script setup lang="ts">
-defineProps<{ variant?: "primary" | "secondary" | "ghost" | "danger"; compact?: boolean }>();
-</script>
-<template>
-  <button :class="['ag-btn', `ag-btn--${variant ?? 'primary'}`, { 'ag-btn--compact': compact }]">
-    <slot />
-  </button>
-</template>
-
-<!-- 用法 -->
-<AgButton variant="danger">删除</AgButton>
-```
-
-## 交互态：用 ref + :class 切换 .is-*
-
-**Switch**
-```vue
-<script setup lang="ts">
-const model = defineModel<boolean>();   // Vue 3.4+ v-model
-</script>
-<template>
-  <button role="switch" :aria-checked="model"
-    :class="['ag-switch', { 'is-on': model }]"
-    @click="model = !model">
-    <span class="ag-switch__thumb" />
-  </button>
-</template>
-```
-
-**Tabs**
+3. 业务页面使用组件 API：
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-const props = defineProps<{ items: { key: string; label: string }[] }>();
-const active = ref(props.items[0]?.key);
+import { AgButton, AgCard, AgCardHeader, AgBadge, AgStatusBadge, AgProgress, AgSelect } from "@/components/agentic-ui";
+
+const team = ref("team");
+const teams = [{ value: "team", label: "Team Overview" }];
 </script>
+
 <template>
-  <div class="ag-tabs">
-    <div class="ag-tabs__list" role="tablist">
-      <button v-for="t in items" :key="t.key" role="tab" :aria-selected="active === t.key"
-        :class="['ag-tab', { 'is-active': active === t.key }]"
-        @click="active = t.key">
-        {{ t.label }}
-      </button>
-    </div>
-    <div class="ag-tabs__panel" role="tabpanel">
-      <slot :active="active" />
-    </div>
-  </div>
+  <AgCard variant="contained">
+    <AgCardHeader title="Blocked Issues">
+      <template #action><AgBadge variant="warning">3</AgBadge></template>
+    </AgCardHeader>
+
+    <AgStatusBadge status="running" label="Running" />
+    <AgProgress :value="62" label="Synthesis progress" />
+    <AgSelect v-model="team" :options="teams" />
+    <AgButton variant="primary">New Dashboard</AgButton>
+  </AgCard>
 </template>
 ```
 
-**Modal（Teleport + Esc 关闭 + 点击遮罩关闭）**
-```vue
-<script setup lang="ts">
-import { watch, onUnmounted } from "vue";
-const props = defineProps<{ open: boolean; title: string }>();
-const emit = defineEmits<{ close: [] }>();
-const onKey = (e: KeyboardEvent) => e.key === "Escape" && emit("close");
-watch(() => props.open, (v) => v ? window.addEventListener("keydown", onKey) : window.removeEventListener("keydown", onKey));
-onUnmounted(() => window.removeEventListener("keydown", onKey));
-</script>
-<template>
-  <Teleport to="body">
-    <div v-if="open" class="ag-overlay" @click="emit('close')">
-      <div class="ag-modal" role="dialog" aria-modal="true" @click.stop>
-        <div class="ag-modal__header">
-          <h2 class="ag-modal__title">{{ title }}</h2>
-          <button class="ag-btn ag-btn--ghost ag-icon-btn" aria-label="关闭" @click="emit('close')">✕</button>
-        </div>
-        <div class="ag-modal__body"><slot /></div>
-        <div class="ag-modal__footer"><slot name="footer" /></div>
-      </div>
-    </div>
-  </Teleport>
-</template>
-```
+## Adapter 模式
 
-**Accordion**
-```vue
-<script setup lang="ts">
-import { ref } from "vue";
-defineProps<{ title: string }>();
-const open = ref(false);
-</script>
-<template>
-  <div :class="['ag-accordion__item', { 'is-open': open }]">
-    <button class="ag-accordion__trigger" :aria-expanded="open" @click="open = !open">
-      {{ title }} <span class="ag-accordion__icon" aria-hidden>▾</span>
-    </button>
-    <div v-if="open" class="ag-accordion__panel"><slot /></div>
-  </div>
-</template>
-```
+项目已有组件库时，不要复制平行组件让业务混用。改造已有 `Button/Input/Badge/Card/Select/Modal` 的 props/variant，使原 import 路径保持稳定。详见 `references/migration.md`。
 
-## 约束（与 checklist.md 一致）
+## 组件契约
 
-- ❗ 只用 class 引用已有类，**不要在 `<style>` 里写硬编码色值**；如需 scoped 样式也只引用 `var(--color-*)` 等 token。
-- 动态值（slider 百分比、progress 宽度）用 `:style` 绑定，且只用于布局尺寸，不用于颜色。
-- 产出后对照 `references/checklist.md` 自检。
+- `AgButton.variant`: `primary | secondary | ghost | danger`
+- `AgButton.size`: `sm | md | icon`
+- `AgBadge.variant`: `default | info | success | warning | error | teal | purple | pink | sky | orange`
+- `AgStatusBadge.status`: `running | idle | completed | error | paused`
+- `AgCard.variant`: `contained | whisper | raised | inset | bare`
+- `AgSelect`: 业务只传 `options/v-model`，不要手写 `.ag-select__trigger`
+- `AgModal`: 业务只传 `open/title/@close`，不要自拼 overlay
+
+## 禁止
+
+- 不要在业务页面用 `:style="{ color }"` 表示状态。
+- 不要把 `.ag-select` 直接贴到 `<button>`；使用 `<AgSelect />`。
+- 不要复制 `.ag-demo-*`。
+- 不要写 `bg-orange-*` / `text-green-*` 这类状态色工具类；扩展 `AgBadge variant`。

@@ -6,7 +6,7 @@ It includes:
 
 - Design tokens
 - CSS component primitives
-- React UI Kit templates
+- React and Vue UI Kit templates
 - Adapter-mode migration guidance
 - Component gallery and validation checklist
 

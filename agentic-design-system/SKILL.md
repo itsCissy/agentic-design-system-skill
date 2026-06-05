@@ -1,6 +1,6 @@
 ---
 name: agentic-design-system
-description: A portable design system skill for applying a consistent, token-driven UI language across products. Includes design tokens, component primitives, React UI Kit templates, adapter-mode migration guidance, and validation checklists. Use it to establish a reusable UI foundation before changing product screens; avoid scattered visual values, ad-hoc status colors, and one-off component structures.
+description: A portable design system skill for applying a consistent, token-driven UI language across products. Includes design tokens, component primitives, React and Vue UI Kit templates, adapter-mode migration guidance, and validation checklists. Use it to establish a reusable UI foundation before changing product screens; avoid scattered visual values, ad-hoc status colors, and one-off component structures.
 ---
 
 # Agentic Design System v2
@@ -12,7 +12,7 @@ description: A portable design system skill for applying a consistent, token-dri
 ## 先选接入模式
 
 1. **Adapter 模式（大项目默认）**：项目已有 `src/components/ui/*`、shadcn、Tailwind 组件层时，先读 `references/migration.md` + `references/shadcn-adapter.md`，只改 token bridge 和基础组件，不批量改业务页面。
-2. **Bootstrap 模式（新项目/无 UI 层）**：复制 `assets/tokens.css`、`assets/components.css` 和 `assets/react`，业务页面使用 React UI kit API。
+2. **Bootstrap 模式（新项目/无 UI 层）**：复制 `assets/tokens.css`、`assets/components.css` 和 `assets/react` 或 `assets/vue`，业务页面使用 UI kit API。
 3. **CSS-only 模式（原型/静态 HTML）**：才允许直接用 `.ag-*` class，并参考 `assets/component-examples.html`。
 
 > 大项目里**不要**把 `.ag-*` 当 Tailwind 工具类到处贴。复杂组件必须通过 UI 组件封装。
@@ -24,6 +24,7 @@ description: A portable design system skill for applying a consistent, token-dri
 | `assets/tokens.css` | 设计 token 唯一事实源，含 light/dark | 所有模式都复制或映射 |
 | `assets/components.css` | UI kit 内部 CSS 基座 | Bootstrap/CSS-only 复制 |
 | `assets/react/` | 轻量 React UI kit 模板 | React/Next 项目复制或参考改造 |
+| `assets/vue/` | 轻量 Vue UI kit 模板 | Vue/Nuxt 项目复制或参考改造 |
 | `assets/component-examples.html` | 组件画廊 + HTML 结构示例 | 只做预览/静态原型 |
 | `references/migration.md` | 大项目迁移顺序与禁止事项 | 改已有项目时必读 |
 | `references/react-ui-kit.md` | React UI kit API 与复制方式 | React/Next Bootstrap 时读 |

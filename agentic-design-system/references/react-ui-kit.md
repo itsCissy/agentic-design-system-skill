@@ -1,6 +1,6 @@
 # React UI Kit 模板
 
-`assets/react` 是轻量便携 UI kit，不是 npm 包。使用时复制到目标项目，并让业务页面调用组件 API，而不是直接拼 `.ag-*` class。
+`assets/react` 是轻量便携 React UI kit，不是 npm 包。Vue/Nuxt 请使用 `assets/vue` 与 `references/vue.md`。使用时复制到目标项目，并让业务页面调用组件 API，而不是直接拼 `.ag-*` class。
 
 ## 推荐复制位置
 
